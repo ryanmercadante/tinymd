@@ -1,7 +1,10 @@
 [package]
 name = "tinymd"
 version = "0.1.0"
+authors = ["Ryan Mercadante <ryan.a.mercadante@gmail.com>"]
 edition = "2018"
+description = "A tiny markdown compiler based on Jesse's tutorials."
+homepage = "https://jesselawson.org/rust"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 

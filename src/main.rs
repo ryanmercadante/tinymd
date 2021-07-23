@@ -1,10 +1,27 @@
-fn get_version() -> u16 {
-    1000
+fn get_title() -> String {
+    let mut the_title = String::from(env!("CARGO_PKG_NAME"));
+    the_title.push_str(" (v");
+    the_title.push_str(env!("CARGO_PKG_VERSION"));
+    the_title.push_str("), ");
+    the_title.push_str(env!("CARGO_PKG_DESCRIPTION"));
+    the_title
+}
+
+// fn parse_markdown_file() {}
+
+fn print_short_banner() {
+    println!("{}", get_title());
+}
+
+fn print_long_banner() {
+    print_short_banner();
+    println!("Written by: {}", env!("CARGO_PKG_AUTHORS"));
+    println!("Homepage: {}", env!("CARGO_PKG_HOMEPAGE"));
+    println!("Usage: tinymd <somefile.md>");
 }
 
 fn usage() {
-    println!("tinymd, a markdown compiler written by Ryan Mercadante");
-    println!("Version {}", get_version());
+    print_long_banner();
 }
 
 fn main() {
