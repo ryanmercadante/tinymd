@@ -1,4 +1,5 @@
 use std::fs::File;
+use std::io::Write;
 use std::io::{BufRead, BufReader};
 use std::path::Path;
 
@@ -81,6 +82,21 @@ fn parse_markdown_file(_filename: &str) {
       tokens.push(output_line)
     }
   } // end of "for line in reader.lines()" block
+
+  // Create output filename from input file and add .html extension
+  let mut output_filename = String::from(&_filename[.._filename.len() - 3]);
+  output_filename.push_str(".html");
+
+  let mut outfile = File::create(output_filename).expect("[ ERROR ] Could not create output file!");
+
+  // Loop through tokens and write each line as bytes to outfile
+  for line in &tokens {
+    outfile
+      .write_all(line.as_bytes())
+      .expect("[ ERROR ] Could not write to output file!");
+  }
+
+  println!("[ INFO ] Parsing complete!");
 }
 
 fn print_short_banner() {
