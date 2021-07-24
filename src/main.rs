@@ -25,6 +25,7 @@ fn parse_markdown_file(_filename: &str) {
   // HTML elements
   let mut _ptag: bool = false;
   let mut _htag: bool = false;
+  let mut _emtag: bool = false;
 
   // Create a place to store all our tokens
   let mut tokens: Vec<String> = Vec::new();
@@ -57,6 +58,24 @@ fn parse_markdown_file(_filename: &str) {
         output_line.push_str("<h1>");
         output_line.push_str(&line_contents[2..]); // Get all but the first two characters
       }
+      Some('*') => {
+        if _emtag {
+          _emtag = false;
+          output_line.push_str("</em>\n")
+        }
+
+        let second_char = &line_contents[1..2];
+        let last_two_char = String::from(&line_contents[&line_contents.len() - 2..]);
+        if second_char.ne(" ") {
+          let last = &last_two_char[1..];
+          let second_last = &last_two_char[..1];
+          if last.eq("*") && second_last.ne(" ") {
+            _emtag = true;
+            output_line.push_str("<em>");
+            output_line.push_str(&line_contents[1..&line_contents.len() - 1]);
+          }
+        }
+      }
       // The first character is not #
       _ => {
         if !_ptag {
@@ -66,6 +85,11 @@ fn parse_markdown_file(_filename: &str) {
 
         output_line.push_str(&line_contents);
       }
+    }
+
+    if _emtag {
+      _emtag = false;
+      output_line.push_str("</em>\n");
     }
 
     if _ptag {
