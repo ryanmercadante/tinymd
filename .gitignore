@@ -1,2 +1,6 @@
 /target
 .vscode
+*.html
+*.tar.gz
+*.md
+*.txt

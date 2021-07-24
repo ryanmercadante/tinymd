@@ -5,6 +5,9 @@ authors = ["Ryan Mercadante <ryan.a.mercadante@gmail.com>"]
 edition = "2018"
 description = "A tiny markdown compiler based on Jesse's tutorials."
 homepage = "https://jesselawson.org/rust"
+repository = "https://github.com/ryanmercadante/tinymd"
+keywords = ["cli", "markdown", "md", "tutorial"]
+categories = ["command-line-utilities"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
