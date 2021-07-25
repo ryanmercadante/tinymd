@@ -2,5 +2,5 @@
 .vscode
 *.html
 *.tar.gz
-*.md
 *.txt
+example.md
