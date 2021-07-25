@@ -25,6 +25,7 @@ fn parse_markdown_file(_filename: &str) {
   // HTML elements
   let mut _ptag: bool = false;
   let mut _htag: bool = false;
+  let mut _h2tag: bool = false;
   let mut _emtag: bool = false;
 
   // Create a place to store all our tokens
@@ -54,9 +55,22 @@ fn parse_markdown_file(_filename: &str) {
           output_line.push_str("</h1>\n"); // Close it if we're already open
         }
 
-        _htag = true;
-        output_line.push_str("<h1>");
-        output_line.push_str(&line_contents[2..]); // Get all but the first two characters
+        if _h2tag {
+          _h2tag = false;
+          output_line.push_str("</h2>\n"); // Close it if we're already open
+        }
+
+        if line_contents[1..2].eq("#") {
+          _h2tag = true;
+          output_line.push_str("<h2>");
+          let trimmed_heading = &line_contents[2..].trim_start();
+          output_line.push_str(&trimmed_heading);
+        } else {
+          _htag = true;
+          output_line.push_str("<h1>");
+          let trimmed_heading = &line_contents[1..].trim_start();
+          output_line.push_str(&trimmed_heading);
+        }
       }
       Some('*') => {
         if _emtag {
@@ -95,6 +109,11 @@ fn parse_markdown_file(_filename: &str) {
     if _ptag {
       _ptag = false;
       output_line.push_str("</p>\n");
+    }
+
+    if _h2tag {
+      _h2tag = false;
+      output_line.push_str("</h2>\n");
     }
 
     if _htag {
